@@ -3,10 +3,18 @@ Lab 16: Creates multiple color objects consisting of RGB values and outputs thos
     This assignment is a modified version of Lab 14 that now exercised 3 different variations of the class constructor.
 IDE: VsCode
 
-About the function coding conventions. Do we 
-// does_foo() converts a...<description>
-// arguments: <list arguments>
-// returns: <describe returned object>
+About the function coding conventions; I totally agree with giving a description, but do we really need to list the arguments and return object?
+I feel like that's obvious from the function header itself, and it just makes it harder to read by adding more comments for example:
+
+setG() sets green color variable
+arguments: int
+returns: void
+void Color::setG(int Green)
+
+vs
+
+setG() sets green color variable
+void Color::setG(int Green)
 */
 
 #include <iostream>
@@ -49,8 +57,9 @@ void ResetColor();                      // Resets console output color
 int main()
 {
     // Initialize variables
-    const unsigned int COLORS_SIZE = 12;
-    Color colors[COLORS_SIZE * 3] = {};
+    const unsigned int COLORS_SIZE = 12; // Number of colors to print per loop per constructor
+    const unsigned int COLORS_MULTIPLIER = 20; // Multiplier to increase i in loops to create more vibrant color output. Be careful, max color value is 255
+    Color colors[COLORS_SIZE * 3] = {}; // Total number of color objects to create
 
     // Have some fun and output color codes with color
     // 3 loops, each one exercises a different variation of the color class constructor
@@ -71,7 +80,7 @@ int main()
     for (size_t i = 0; i < COLORS_SIZE; i++)
     {
         if (i % 4 == 0 && i != 0) cout << endl;
-        colors[i] = Color(i * 10, i * 10);
+        colors[i] = Color(i * COLORS_MULTIPLIER, i * COLORS_MULTIPLIER);
         SetForegroundColor(colors[i].getR(), colors[i].getG(), colors[i].getB()); // Change text color to RGB values
         cout << "Color " << i << "::";
         ResetColor();
@@ -83,7 +92,7 @@ int main()
     for (size_t i = 0; i < COLORS_SIZE; i++)
     {
         if (i % 4 == 0 && i != 0) cout << endl;
-        colors[i] = Color(i * 10, i * 10, i * 10);
+        colors[i] = Color(i * COLORS_MULTIPLIER, i * COLORS_MULTIPLIER, i * COLORS_MULTIPLIER);
         SetForegroundColor(colors[i].getR(), colors[i].getG(), colors[i].getB()); // Change text color to RGB values
         cout << "Color " << i << "::";
         ResetColor();
@@ -171,7 +180,7 @@ int Color::getB() const
     return b;
 }
 
-// Randomize color. Return by & for method chaining
+// Randomize color RGB values. Return by & for method chaining
 Color &Color::randomizeColor()
 {
     // Random number generator to create RGB
