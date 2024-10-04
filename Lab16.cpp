@@ -39,12 +39,13 @@ void ResetColor(); // Resets console output color
 int main()
 {
     // Initialize variables
-    const unsigned int COLORS_SIZE = 20;
+    const unsigned int COLORS_SIZE = 36;
     Color colors[COLORS_SIZE] = {};
 
     // Finally, have some fun and output color codes with color
     // Not going to color the individual elements in toString
-    cout << "COLORS:" << endl;
+    // Full parameter 
+    cout << "FULL PARAMETER COLORS:" << endl;
     for (size_t i = 0; i < COLORS_SIZE; i++)
     {
         if (i % 4 == 0 && i != 0) cout << endl;
