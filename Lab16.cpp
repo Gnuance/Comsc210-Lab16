@@ -1,4 +1,13 @@
-// Lab 16: Creates multiple color objects consisting of RGB values and outputs those object values to console.
+/* 
+Lab 16: Creates multiple color objects consisting of RGB values and outputs those object values to console.
+    This assignment is a modified version of Lab 14 that now exercised 3 different variations of the class constructor.
+IDE: VsCode
+
+About the function coding conventions. Do we 
+// does_foo() converts a...<description>
+// arguments: <list arguments>
+// returns: <describe returned object>
+*/
 
 #include <iostream>
 #include <sstream>
@@ -32,7 +41,7 @@ public:
     ~Color();
 };
 
-// ADDED FROM LAB 13
+// Function declarations to set foreground and background color, as well as reset color parameter
 void SetForegroundColor(int, int, int); // Changes cout letter color
 void SetBackgroundColor(int, int, int); // Changes cout background color
 void ResetColor();                      // Resets console output color
@@ -43,15 +52,13 @@ int main()
     const unsigned int COLORS_SIZE = 12;
     Color colors[COLORS_SIZE * 3] = {};
 
-    // Finally, have some fun and output color codes with color
-    // Not going to color the individual elements in toString
-
-    // No parameter
+    // Have some fun and output color codes with color
+    // 3 loops, each one exercises a different variation of the color class constructor
+    // No arg constructor
     cout << "DEFAULT COLOR CONSTRUCTOR:" << endl;
     for (size_t i = 0; i < COLORS_SIZE; i++)
     {
-        if (i % 4 == 0 && i != 0)
-            cout << endl;
+        if (i % 4 == 0 && i != 0) cout << endl;
         colors[i] = Color().randomizeColor();                                     // Return randomized color object
         SetForegroundColor(colors[i].getR(), colors[i].getG(), colors[i].getB()); // Change text color to RGB values
         cout << "Color " << i << "::";
@@ -63,8 +70,7 @@ int main()
     cout << "\n\nPARTIAL PARAMETER CONSTRUCTOR:" << endl;
     for (size_t i = 0; i < COLORS_SIZE; i++)
     {
-        if (i % 4 == 0 && i != 0)
-            cout << endl;
+        if (i % 4 == 0 && i != 0) cout << endl;
         colors[i] = Color(i * 10, i * 10);
         SetForegroundColor(colors[i].getR(), colors[i].getG(), colors[i].getB()); // Change text color to RGB values
         cout << "Color " << i << "::";
@@ -76,8 +82,7 @@ int main()
     cout << "\n\nFULL PARAMETER COLORS:" << endl;
     for (size_t i = 0; i < COLORS_SIZE; i++)
     {
-        if (i % 4 == 0 && i != 0)
-            cout << endl;
+        if (i % 4 == 0 && i != 0) cout << endl;
         colors[i] = Color(i * 10, i * 10, i * 10);
         SetForegroundColor(colors[i].getR(), colors[i].getG(), colors[i].getB()); // Change text color to RGB values
         cout << "Color " << i << "::";
@@ -113,6 +118,7 @@ Color::Color(int red, int green, int blue)
     setB(blue);
 }
 
+// Standard set and get functions for each of the color variables
 void Color::setR(int Red)
 {
     if (Red >= 0 && Red <= 255)
@@ -187,7 +193,7 @@ string Color::toString() const
     return output;
 }
 
-// Overriden operator<<
+// Overriden operator<< because I took Comsc 200
 ostream &operator<<(ostream &os, const Color &c)
 {
     os << c.toString();
