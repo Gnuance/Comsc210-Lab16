@@ -18,6 +18,7 @@ private:
 
 public:
     Color();
+    Color(int, int);
     Color(int, int, int);
     void setR(int);
     void setG(int);
@@ -26,7 +27,7 @@ public:
     int getR() const;
     int getG() const;
     int getB() const;
-    Color& randomizeColor(); // Randomizes color RGB values. Return by & for method chaining
+    Color &randomizeColor(); // Randomizes color RGB values. Return by & for method chaining
     string toString() const; // print() method but returns a string
     ~Color();
 };
@@ -34,29 +35,58 @@ public:
 // ADDED FROM LAB 13
 void SetForegroundColor(int, int, int); // Changes cout letter color
 void SetBackgroundColor(int, int, int); // Changes cout background color
-void ResetColor(); // Resets console output color
+void ResetColor();                      // Resets console output color
 
 int main()
 {
     // Initialize variables
-    const unsigned int COLORS_SIZE = 36;
-    Color colors[COLORS_SIZE] = {};
+    const unsigned int COLORS_SIZE = 12;
+    Color colors[COLORS_SIZE * 3] = {};
 
     // Finally, have some fun and output color codes with color
     // Not going to color the individual elements in toString
-    // Full parameter 
-    cout << "FULL PARAMETER COLORS:" << endl;
+
+    // No parameter
+    cout << "DEFAULT COLOR CONSTRUCTOR:" << endl;
     for (size_t i = 0; i < COLORS_SIZE; i++)
     {
-        if (i % 4 == 0 && i != 0) cout << endl;
-        colors[i] = Color().randomizeColor(); // Return randomized color object
+        if (i % 4 == 0 && i != 0)
+            cout << endl;
+        colors[i] = Color().randomizeColor();                                     // Return randomized color object
         SetForegroundColor(colors[i].getR(), colors[i].getG(), colors[i].getB()); // Change text color to RGB values
         cout << "Color " << i << "::";
         ResetColor();
-        cout << " " << colors[i].toString() << "\t";        
-    }      
+        cout << " " << colors[i].toString() << "\t";
+    }
 
-    cout << endl << endl; // Spacing
+    // Partial parameter
+    cout << "\n\nPARTIAL PARAMETER CONSTRUCTOR:" << endl;
+    for (size_t i = 0; i < COLORS_SIZE; i++)
+    {
+        if (i % 4 == 0 && i != 0)
+            cout << endl;
+        colors[i] = Color(i * 10, i * 10);
+        SetForegroundColor(colors[i].getR(), colors[i].getG(), colors[i].getB()); // Change text color to RGB values
+        cout << "Color " << i << "::";
+        ResetColor();
+        cout << " " << colors[i].toString() << "\t";
+    }
+
+    // Full parameter
+    cout << "\n\nFULL PARAMETER COLORS:" << endl;
+    for (size_t i = 0; i < COLORS_SIZE; i++)
+    {
+        if (i % 4 == 0 && i != 0)
+            cout << endl;
+        colors[i] = Color(i * 10, i * 10, i * 10);
+        SetForegroundColor(colors[i].getR(), colors[i].getG(), colors[i].getB()); // Change text color to RGB values
+        cout << "Color " << i << "::";
+        ResetColor();
+        cout << " " << colors[i].toString() << "\t";
+    }
+
+    cout << endl
+         << endl; // Spacing
     return 0;
 }
 
@@ -67,9 +97,16 @@ Color::Color()
 {
 }
 
+// Partial parameter constructor for red & green only
+Color::Color(int red, int green)
+{
+    setR(red);
+    setG(green);
+    setB(0);
+}
+
 // Overloaded constructor
 Color::Color(int red, int green, int blue)
-// Initialized default if none specified
 {
     setR(red);
     setG(green);
@@ -129,11 +166,12 @@ int Color::getB() const
 }
 
 // Randomize color. Return by & for method chaining
-Color& Color::randomizeColor(){
+Color &Color::randomizeColor()
+{
     // Random number generator to create RGB
     random_device rd;
     mt19937 gen(rd());
-    uniform_int_distribution<> dist(0, 255);  // For creating colors
+    uniform_int_distribution<> dist(0, 255); // For creating colors
     setR(dist(gen));
     setG(dist(gen));
     setB(dist(gen));
